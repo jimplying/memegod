@@ -21,6 +21,7 @@ client.on('message', message => {
             emitter.emit('messageReceived', message);
         }
     } catch (error) {
+        console.log(error);
         message.channel.send("Dr ging wat mis, blame Guido voor bad development");
     }
 });
