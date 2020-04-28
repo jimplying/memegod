@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "central-event": "^1.0.1",
     "discord.js": "^12.2.0",
     "reddit-simple": "^2.1.1"
   }

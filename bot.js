@@ -1,8 +1,13 @@
 const Discord = require('discord.js');
-const { RedditSimple } = require("reddit-simple");
+const emitter = require('central-event');
+
+var normalizedPath = require("path").join(__dirname, "commands");
+
+require("fs").readdirSync(normalizedPath).forEach(function (file) {
+    require("./commands/" + file);
+});
 
 const auth = require('./auth.json');
-
 const client = new Discord.Client();
 
 client.once('ready', () => {
@@ -11,29 +16,10 @@ client.once('ready', () => {
 
 client.on('message', message => {
     try {
-        if (message.toString().toLowerCase() === "!meme") {
-            const subreddits = ["dankmemes", "surrealmemes", "comedyheaven", "DeepFriedMemes"]
-            const randomElement = subreddits[Math.floor(Math.random() * subreddits.length)];
-
-            RedditSimple.RandomPost(randomElement).then(res => {
-                message.channel.send(res[0].data.url);
-            });
-        } else if (message.toString().toLowerCase() === "!kompjoeter") {
-            RedditSimple.RandomPost("battlestations").then(res => {
-                message.channel.send(res[0].data.url);
-            });
-        } else if (message.toString().toLowerCase() === "!ass") {
-            RedditSimple.RandomPost("ass").then(res => {
-                message.channel.send(res[0].data.url);
-            });
-        } else if (message.toString().toLowerCase() === "!tits") {
-            RedditSimple.RandomPost("tits").then(res => {
-                message.channel.send(res[0].data.url);
-            });
-        } else if (message.toString().toLowerCase() === "!help") {
-            message.channel.send("Joe ken use de vollowing kommends: ```!meme, !kompjoeter, !ass, !tits```");
+        if (message.content.substring(0, 1) === "!") {
+            console.log('Received message: ' + message.content);
+            emitter.emit('messageReceived', message);
         }
-
     } catch (error) {
         message.channel.send("Dr ging wat mis, blame Guido voor bad development");
     }
