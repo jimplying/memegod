@@ -17,12 +17,12 @@ client.once('ready', () => {
 client.on('message', message => {
     try {
         if (message.content.substring(0, 1) === "!") {
-            if (message.member.user.tag == "Milan#0738") {
-                message.channel.send("Milan, je moet je bek houden");
-            } else {
+            // if (message.member.user.tag == "Milan#0738") {
+            //     message.channel.send("Milan, je moet je bek houden");
+            // } else {
                 console.log('Received message: ' + message.content + ' from: ' + message.member.user.tag);
                 emitter.emit('messageReceived', message);
-            }
+            // }
         }
     } catch (error) {
         console.log(error);
